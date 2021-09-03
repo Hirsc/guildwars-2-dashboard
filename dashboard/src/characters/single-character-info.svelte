@@ -1,6 +1,7 @@
 <script lang=typescript>
-    export let fetchCharacter
-    export let name
+    import type { Character, Name } from "./character";
+    export let fetchCharacter: (name: Name) => Promise<Character>
+    export let name: Name
         
     let promise = fetchCharacter(name)
 </script>
