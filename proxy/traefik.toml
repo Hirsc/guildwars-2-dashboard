@@ -1,0 +1,46 @@
+
+defaultEntryPoints = ["http","ws"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":7000"
+    [entryPoints.http.auth.forward]
+    address = "http://gatekeeper:8080"
+    trustForwardHeader = true
+  [entryPoints.ws]
+  address = ":5678"
+  [entryPoints.gatewayui]
+  address = ":9999"
+
+[api]
+entryPoint = "gatewayui"
+debug = true
+
+[ping]
+[file]
+watch = true
+
+logLevel = "DEBUG"
+[traefikLog]
+
+
+[frontends]
+
+    [frontends.web-main]
+        backend="web-main"
+        priority=10
+        entrypoints = ["http"]
+        [frontends.web-main.routes.host-matcher]
+            rule="HostRegexp:{host:.*}"
+        [frontends.web-main.routes.path-matcher]
+            rule="PathPrefix:/"
+        
+   
+
+[backends]
+
+    [backends.web-main]
+        [backends.web-main.servers.production]
+            url = "http://web-main:8080"
+            
+  

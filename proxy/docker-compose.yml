@@ -1,0 +1,15 @@
+version: "3.6"
+networks:
+    gw2dashboard:
+        driver: bridge
+services:
+    proxy:
+        image: "traefik:v2.5.2"
+        ports:
+            - "7000:7000" # open this
+            - "9999:9999" # traefik ui
+        volumes:
+            - ./traefik.toml:/etc/traefik/traefik.toml
+        networks:
+            - gw2dashboard
+    
